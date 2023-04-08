@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <title>URL QR Code generator</title>
+    <script src="js/qrcode.min.js"> </script>
+    <script>
+        var qrcode = undefined;
+        function generateQR() {
+            let url = document.getElementById("url").value;
+            if (isValidHttpUrl(url)) {
+                if (qrcode == undefined) {
+                    qrcode = new QRCode(document.getElementById("qrcode"), url);
+                }
+                qrcode.clear();
+                qrcode.makeCode(url);
+            } else {
+                console.log("Invalid URL")
+            }
+        }
+
+        function isValidHttpUrl(string) {
+            let url;
+            try {
+                url = new URL(string);
+                return true
+            } catch (e) {
+                console.log(e);
+                return false;
+            }
+        }
+
+    </script>
+  </head>
+  <body>
+    <main class="container">
+
+            <!-- Grid -->
+            <div class="grid">
+          
+              <label for="url">
+                Enter URL
+                <input type="text" id="url" name="url" placeholder="http://google.com" required>
+              </label>
+
+            </div>
+          
+            <!-- Button -->
+            <button onclick="generateQR()">Generate QR</button>
+            
+            <div id="qrcode"></div>
+            
+    </main>
+    <footer class="container">
+         <a href="https://twitter.com/kaar3k"> @kaar3k </a>
+    </footer>
+
+  </body>
+</html>
